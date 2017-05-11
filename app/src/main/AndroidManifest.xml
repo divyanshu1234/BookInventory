@@ -17,6 +17,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddBookActivity"></activity>
+
+        <provider
+            android:authorities="divyanshu.bookinventory"
+            android:name=".database.BooksProvider"
+            android:exported="false"/>
     </application>
 
 </manifest>

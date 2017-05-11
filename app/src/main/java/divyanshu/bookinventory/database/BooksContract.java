@@ -1,5 +1,6 @@
 package divyanshu.bookinventory.database;
 
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
@@ -8,8 +9,17 @@ import android.provider.BaseColumns;
 
 public final class BooksContract {
 
+    public static final String CONTENT_AUTHORITY = "divyanshu.bookinventory";
+    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+
+    public static final String PATH_BOOKS = "books";
+    public static final String PATH_BOOKS_ID = PATH_BOOKS + "/#";
+
 
     public static final class BooksEntry implements BaseColumns{
+
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_BOOKS);
+
 
         public static final String TABLE_NAME = "books";
 
