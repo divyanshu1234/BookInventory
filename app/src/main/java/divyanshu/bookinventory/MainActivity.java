@@ -14,7 +14,7 @@ import divyanshu.bookinventory.database.BooksContract;
 import divyanshu.bookinventory.database.BooksDbHelper;
 
 public class MainActivity extends AppCompatActivity {
-    
+
     TextView tv_total_items, tv_display_data;
 
     @Override
@@ -81,6 +81,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    private void deleteAllData() {
+        getContentResolver().delete(BooksContract.BooksEntry.CONTENT_URI, null, null);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -99,6 +104,9 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, AddBookActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.m_delete_all_data:
+                deleteAllData();
+                displayData();
         }
 
         return super.onOptionsItemSelected(item);
