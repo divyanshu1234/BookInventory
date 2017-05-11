@@ -1,7 +1,6 @@
 package divyanshu.bookinventory;
 
 import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,7 +10,6 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 
 import divyanshu.bookinventory.database.BooksContract;
-import divyanshu.bookinventory.database.BooksDbHelper;
 
 public class AddBookActivity extends AppCompatActivity {
 
@@ -47,8 +45,6 @@ public class AddBookActivity extends AppCompatActivity {
     }
 
     private void saveData() {
-        BooksDbHelper booksDbHelper = new BooksDbHelper(this);
-        SQLiteDatabase database = booksDbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
 
@@ -56,7 +52,7 @@ public class AddBookActivity extends AppCompatActivity {
         values.put(BooksContract.BooksEntry.COLUMN_RATING, r_rating.getRating());
         values.put(BooksContract.BooksEntry.COLUMN_TYPE, type);
 
-        database.insert(BooksContract.BooksEntry.TABLE_NAME, null, values);
+        getContentResolver().insert(BooksContract.BooksEntry.CONTENT_URI, values);
     }
 
     public void onRadioClick(View view) {

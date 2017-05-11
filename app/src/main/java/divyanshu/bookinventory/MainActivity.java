@@ -3,7 +3,7 @@ package divyanshu.bookinventory;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,9 +14,7 @@ import divyanshu.bookinventory.database.BooksContract;
 import divyanshu.bookinventory.database.BooksDbHelper;
 
 public class MainActivity extends AppCompatActivity {
-
-    BooksDbHelper booksDbHelper;
-
+    
     TextView tv_total_items, tv_display_data;
 
     @Override
@@ -27,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
         tv_total_items = (TextView) findViewById(R.id.tv_total_items);
         tv_display_data = (TextView) findViewById(R.id.tv_display_data);
 
-        booksDbHelper = new BooksDbHelper(this);
         displayData();
     }
 
@@ -38,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayData() {
-        SQLiteDatabase database = booksDbHelper.getReadableDatabase();
-
         String[] projection = new String[]{
                 BooksContract.BooksEntry._ID,
                 BooksContract.BooksEntry.COLUMN_BOOK_NAME,
@@ -47,11 +42,9 @@ public class MainActivity extends AppCompatActivity {
                 BooksContract.BooksEntry.COLUMN_TYPE
         };
 
-        Cursor cursor = database.query(
-                BooksContract.BooksEntry.TABLE_NAME,
+        Cursor cursor = getContentResolver().query(
+                BooksContract.BooksEntry.CONTENT_URI,
                 projection,
-                null,
-                null,
                 null,
                 null,
                 null);
@@ -78,15 +71,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void addSampleData() {
-        SQLiteDatabase database = booksDbHelper.getWritableDatabase();
-
         ContentValues values = new ContentValues();
 
         values.put(BooksContract.BooksEntry.COLUMN_BOOK_NAME, "Sample Name");
         values.put(BooksContract.BooksEntry.COLUMN_RATING, 2.5f);
         values.put(BooksContract.BooksEntry.COLUMN_TYPE, BooksContract.BooksEntry.TYPE_FICTION);
 
-        database.insert(BooksContract.BooksEntry.TABLE_NAME, null, values);
+        Uri insertUri = getContentResolver().insert(BooksContract.BooksEntry.CONTENT_URI, values);
+
     }
 
     @Override
