@@ -44,8 +44,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         cursor.moveToPosition(-1);
 
-        Log.d("Error", cursor.getPosition() + "");
-
         while (cursor.moveToNext()){
             String display = cursor.getInt(indexID) + " - "
                     + cursor.getString(indexBookName) + " - "
@@ -106,10 +104,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 BooksContract.BooksEntry.COLUMN_RATING,
                 BooksContract.BooksEntry.COLUMN_TYPE
         };
-
-
-        Log.d("Error", "onCreateLoader");
-
+        
         return new CursorLoader(
                 this,
                 BooksContract.BooksEntry.CONTENT_URI,
