@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.m_delete_all_data:
                 deleteAllData();
                 displayData();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
