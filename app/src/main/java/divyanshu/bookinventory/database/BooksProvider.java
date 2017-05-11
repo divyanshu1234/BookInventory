@@ -75,6 +75,8 @@ public class BooksProvider extends ContentProvider {
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
 
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+
         return cursor;
     }
 
@@ -112,6 +114,8 @@ public class BooksProvider extends ContentProvider {
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
 
+        getContext().getContentResolver().notifyChange(uri, null);
+
         return ContentUris.withAppendedId(uri, id);
     }
 
@@ -137,6 +141,8 @@ public class BooksProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
+
+        getContext().getContentResolver().notifyChange(uri, null);
 
         return rowsDeleted;
     }
@@ -171,6 +177,8 @@ public class BooksProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
+
+        getContext().getContentResolver().notifyChange(uri, null);
 
         return rowsUpdated;
     }
