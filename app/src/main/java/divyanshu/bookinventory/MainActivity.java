@@ -9,6 +9,7 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -41,6 +42,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         tv_total_items.setText(String.valueOf(cursor.getCount()));
         tv_display_data.setText("");
 
+        cursor.moveToPosition(-1);
+
+        Log.d("Error", cursor.getPosition() + "");
+
         while (cursor.moveToNext()){
             String display = cursor.getInt(indexID) + " - "
                     + cursor.getString(indexBookName) + " - "
@@ -49,8 +54,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
             tv_display_data.append(display);
         }
-
-        cursor.close();
     }
 
 
@@ -103,6 +106,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 BooksContract.BooksEntry.COLUMN_RATING,
                 BooksContract.BooksEntry.COLUMN_TYPE
         };
+
+
+        Log.d("Error", "onCreateLoader");
 
         return new CursorLoader(
                 this,
